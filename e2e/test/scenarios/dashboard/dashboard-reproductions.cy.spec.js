@@ -641,7 +641,7 @@ describe("issue 28756", () => {
   });
 });
 
-H.describeEE("issue 29076", () => {
+describe("issue 29076", () => {
   beforeEach(() => {
     H.restore();
 
@@ -757,7 +757,7 @@ describe("issue 31274", () => {
     );
 
     cy.findByTestId("dashboardcard-actions-panel").within(() => {
-      cy.icon("close").parent("a").click({ position: "bottom" });
+      cy.icon("close").closest("a").click({ position: "bottom" });
     });
 
     cy.findByTestId("dashcard").should("not.exist");

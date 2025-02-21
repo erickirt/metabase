@@ -33,10 +33,6 @@ const PublicComponentStylesWrapperInner = styled.div`
   transition: var(--transition-theme-change);
 
   ${saveDomImageStyles}
-
-  :where(svg) {
-    display: inline;
-  }
 `;
 
 export const PublicComponentStylesWrapper = (
@@ -45,6 +41,7 @@ export const PublicComponentStylesWrapper = (
   return (
     <PublicComponentStylesWrapperInner
       {...props}
+      dir="ltr"
       // eslint-disable-next-line react/prop-types -- className is in div props :shrugs:
       className={`mb-wrapper ${props.className}`}
     />
@@ -60,15 +57,20 @@ export const PublicComponentStylesWrapper = (
  * - this global css is loaded in the provider, before our other styles
  * - -> our other code with specificity (0,1,0) will override this as they're loaded after
  */
+// note: if we move this to  css.module, remember to add :global to .mb-wrapper
 export const SCOPED_CSS_RESET = css`
-  ${PublicComponentStylesWrapperInner} *:where(button) {
+  :where(.mb-wrapper) *:where(button) {
     border: 0;
     background-color: transparent;
   }
 
   // fonts.styled.ts has a reset for list padding and margin in the main app, so we need to do it here
-  ${PublicComponentStylesWrapperInner} *:where(ul) {
+  :where(.mb-wrapper) *:where(ul) {
     padding: 0;
     margin: 0;
+  }
+
+  :where(.mb-wrapper) *:where(svg) {
+    display: inline;
   }
 `;

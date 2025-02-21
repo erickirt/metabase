@@ -5,18 +5,18 @@
    [clojure.set :as set]
    [clojure.string :as str]
    [clojure.test :refer :all]
-   [metabase.analytics.prometheus :as prometheus]
+   [metabase.analytics.core :as analytics]
+   [metabase.indexed-entities.models.model-index :as model-index]
    [metabase.legacy-mbql.normalize :as mbql.normalize]
    [metabase.models.collection :as collection]
    [metabase.models.database :as database]
    [metabase.models.interface :as mi]
-   [metabase.models.model-index :as model-index]
    [metabase.models.moderation-review :as moderation-review]
-   [metabase.models.revision :as revision]
    [metabase.permissions.models.data-permissions :as data-perms]
    [metabase.permissions.models.permissions :as perms]
    [metabase.permissions.models.permissions-group :as perms-group]
    [metabase.permissions.util :as perms-util]
+   [metabase.revisions.models.revision :as revision]
    [metabase.search.appdb.core :as search.engines.appdb]
    [metabase.search.appdb.index :as search.index]
    [metabase.search.config :as search.config]
@@ -1751,7 +1751,7 @@
 (deftest prometheus-response-metrics-test
   (testing "Prometheus counters get incremented for error responses"
     (let [calls (atom nil)]
-      (mt/with-dynamic-fn-redefs [prometheus/inc! #(swap! calls conj %)]
+      (mt/with-dynamic-fn-redefs [analytics/inc! #(swap! calls conj %)]
         (testing "Success response"
           (search-request :crowberto :q "test")
           (is (= 1 (count (filter #{:metabase-search/response-ok} @calls))))

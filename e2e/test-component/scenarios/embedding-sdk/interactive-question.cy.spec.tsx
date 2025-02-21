@@ -12,7 +12,6 @@ import {
 } from "e2e/support/cypress_sample_instance_data";
 import {
   createQuestion,
-  describeEE,
   popover,
   tableAllFieldsHiddenImage,
   tableHeaderClick,
@@ -34,7 +33,7 @@ const { ORDERS, ORDERS_ID } = SAMPLE_DATABASE;
 
 type InteractiveQuestionProps = ComponentProps<typeof InteractiveQuestion>;
 
-describeEE("scenarios > embedding-sdk > interactive-question", () => {
+describe("scenarios > embedding-sdk > interactive-question", () => {
   beforeEach(() => {
     signInAsAdminAndEnableEmbeddingSdk();
 
@@ -237,7 +236,7 @@ describeEE("scenarios > embedding-sdk > interactive-question", () => {
           </Box>
 
           {isSaveModalOpen && (
-            <Modal data-testid="modal" opened={isSaveModalOpen} onClose={close}>
+            <Modal opened={isSaveModalOpen} onClose={close}>
               <InteractiveQuestion.SaveQuestionForm onCancel={close} />
             </Modal>
           )}
